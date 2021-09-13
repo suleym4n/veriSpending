@@ -1,0 +1,60 @@
+﻿@model IEnumerable<VeriSpending1.Models.spending>
+
+@{
+    ViewBag.Title = "ListDecline";
+}
+
+<h2>Reddedilen Masraflar</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.spendingTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.spendingDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.spendingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.spendingAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.approval)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.spendingTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.spendingDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.spendingDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.spendingAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.approval)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.id)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "EditDecline", new { id=item.spendingId }) |
+            @Html.ActionLink("Detay", "Details", new { id=item.spendingId })
+        </td>
+    </tr>
+}
+
+</table>

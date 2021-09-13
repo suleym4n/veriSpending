@@ -1,0 +1,35 @@
+﻿@model VeriSpending1.Models.declineSpending
+
+@{
+    ViewBag.Title = "Approved";
+}
+
+<h2>Onay Formu</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+
+        <div class="form-group">
+            <strong style="text-align:center">Onaylamak istiyor musunuz.</strong>
+        </div>
+
+     
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Onayla" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

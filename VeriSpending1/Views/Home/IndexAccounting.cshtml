@@ -1,0 +1,41 @@
+﻿<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("VeriSpending", "IndexAccounting", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "IndexAccounting", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                <li>@Html.ActionLink("Çıkış Yap", "Logout", "Login", new { area = "" }, new { @class = "navbar-brand" })</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Ödenmeyi Bekleyen Masraflar</h2>
+            <p>
+                Buradan Ödenmeyi Bekleyen Masrafları görüntüleyebilirsiniz.
+            </p>
+            @Html.ActionLink("Ödenmeyi Bekleyen Masraflar", "ListAproved", "Spending")
+
+        </div>
+        
+        <div class="col-md-4">
+            <h2>Çıkış Yap</h2>
+            <p>Buradan çıkış yapabilirsiniz</p>
+            @Html.ActionLink("Çıkış Yap", "Logout", "Login")
+        </div>
+    </div>
+
+
+
+</div>

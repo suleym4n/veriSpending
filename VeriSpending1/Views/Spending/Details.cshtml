@@ -1,0 +1,42 @@
+﻿@model VeriSpending1.Models.declineSpending
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Red detayları</h2>
+
+<div>
+  
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.declineTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.declineTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.declineComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.declineComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.spending.spendingTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.spending.spendingTitle)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    
+    @Html.ActionLink("Back to List", "Index")
+</p>

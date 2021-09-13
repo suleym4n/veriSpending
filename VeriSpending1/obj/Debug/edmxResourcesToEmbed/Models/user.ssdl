@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="veriSpendingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="declineSpending">
+    <Key>
+      <PropertyRef Name="declineId" />
+    </Key>
+    <Property Name="declineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="spendingId" Type="int" Nullable="false" />
+    <Property Name="declineTitle" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="declineComment" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="log">
+    <Key>
+      <PropertyRef Name="logId" />
+    </Key>
+    <Property Name="logId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="userId" Type="varchar(max)" Nullable="false" />
+    <Property Name="ıpAddres" Type="varchar(max)" Nullable="false" />
+    <Property Name="areaAccessed" Type="varchar(max)" Nullable="false" />
+    <Property Name="timeStamp" Type="datetime" Nullable="false" />
+    <Property Name="browser" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="spending">
+    <Key>
+      <PropertyRef Name="spendingId" />
+    </Key>
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="spendingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="spendingTitle" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="spendingDescription" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="spendingDate" Type="date" Nullable="false" />
+    <Property Name="spendingAmount" Type="money" Nullable="false" />
+    <Property Name="approval" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="roles" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_declineSpending_spending">
+    <End Role="spending" Type="Self.spending" Multiplicity="1" />
+    <End Role="declineSpending" Type="Self.declineSpending" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="spending">
+        <PropertyRef Name="spendingId" />
+      </Principal>
+      <Dependent Role="declineSpending">
+        <PropertyRef Name="spendingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_spending_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="spending" Type="Self.spending" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="spending">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="veriSpendingModelStoreContainer">
+    <EntitySet Name="declineSpending" EntityType="Self.declineSpending" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="log" EntityType="Self.log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="spending" EntityType="Self.spending" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_declineSpending_spending" Association="Self.FK_declineSpending_spending">
+      <End Role="spending" EntitySet="spending" />
+      <End Role="declineSpending" EntitySet="declineSpending" />
+    </AssociationSet>
+    <AssociationSet Name="FK_spending_user" Association="Self.FK_spending_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="spending" EntitySet="spending" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

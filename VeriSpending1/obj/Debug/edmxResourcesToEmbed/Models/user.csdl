@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="veriSpendingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="spending">
+    <Key>
+      <PropertyRef Name="spendingId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="spendingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="spendingTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="spendingDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="spendingDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="spendingAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="user" Relationship="Self.FK_spending_user" FromRole="spending" ToRole="user" />
+    <Property Name="approval" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="declineSpending" Relationship="veriSpendingModel.FK_declineSpending_spending" FromRole="spending" ToRole="declineSpending" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="spending" Relationship="Self.FK_spending_user" FromRole="user" ToRole="spending" />
+    <Property Name="roles" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_spending_user">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="spending" Type="Self.spending" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="spending">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="veriSpendingdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="spending" EntityType="Self.spending" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="user" EntityType="Self.user" />
+    <AssociationSet Name="FK_spending_user" Association="Self.FK_spending_user">
+      <End Role="user" EntitySet="user" />
+      <End Role="spending" EntitySet="spending" />
+    </AssociationSet>
+    <EntitySet Name="declineSpending" EntityType="veriSpendingModel.declineSpending" />
+    <AssociationSet Name="FK_declineSpending_spending" Association="veriSpendingModel.FK_declineSpending_spending">
+      <End Role="spending" EntitySet="spending" />
+      <End Role="declineSpending" EntitySet="declineSpending" />
+    </AssociationSet>
+    <EntitySet Name="log" EntityType="veriSpendingModel.log" />
+  </EntityContainer>
+  <EntityType Name="declineSpending">
+    <Key>
+      <PropertyRef Name="declineId" />
+    </Key>
+    <Property Name="declineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="spendingId" Type="Int32" Nullable="false" />
+    <Property Name="declineTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="declineComment" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="spending" Relationship="veriSpendingModel.FK_declineSpending_spending" FromRole="declineSpending" ToRole="spending" />
+  </EntityType>
+  <Association Name="FK_declineSpending_spending">
+    <End Type="veriSpendingModel.spending" Role="spending" Multiplicity="1" />
+    <End Type="veriSpendingModel.declineSpending" Role="declineSpending" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="spending">
+        <PropertyRef Name="spendingId" />
+      </Principal>
+      <Dependent Role="declineSpending">
+        <PropertyRef Name="spendingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="log">
+    <Key>
+      <PropertyRef Name="logId" />
+    </Key>
+    <Property Name="logId" Type="Guid" Nullable="false" />
+    <Property Name="userId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ıpAddres" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="areaAccessed" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="timeStamp" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="browser" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>
